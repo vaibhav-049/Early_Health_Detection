@@ -1,4 +1,4 @@
-/* Simple CSS for BTech 2nd Year Project */
+/* Enhanced CSS for BTech 2nd Year Health Risk Predictor Project */
 
 /* Basic Layout */
 html, body {
@@ -9,7 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 main {
@@ -19,62 +19,182 @@ main {
 /* Card styling */
 .card {
     margin-bottom: 20px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
 }
 
 .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-header {
+    font-weight: bold;
+    border-bottom: none;
+}
+
+/* Color enhancements */
+[data-bs-theme="dark"] {
+    --text-white: #ffffff;
+    --text-light: #d1d1d1;
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+}
+
+[data-bs-theme="light"] {
+    --text-white: #ffffff;
+    --text-light: #212529;
+    --bg-dark: #f8f9fa;
+    --bg-card: #ffffff;
 }
 
 /* Form elements */
 .form-control:focus, .form-select:focus {
     border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
 }
 
 /* Rounded elements */
-.alert, .card {
+.alert, .card, .form-control, .form-select, .btn {
     border-radius: 0.5rem;
 }
 
 /* Navigation */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 0;
+}
+
 .navbar-nav .nav-link.active {
     font-weight: bold;
     border-bottom: 2px solid var(--bs-primary);
 }
 
-/* Dark mode toggle adjustments */
-.form-check-input:checked {
+/* Dark mode toggle - Premium style */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
     background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
 }
 
-.form-switch .form-check-input {
-    width: 2.5em;
-    margin-left: -2.8em;
-    cursor: pointer;
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--bs-primary);
 }
 
-.form-check-label {
-    cursor: pointer;
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 /* Badge styling */
 .badge {
-    padding: 0.4em 0.7em;
+    padding: 0.5em 0.8em;
     font-weight: normal;
+    border-radius: 50rem;
 }
 
 /* Progress bar styling */
 .progress {
     height: 1.2rem;
     margin: 1rem 0;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.progress-bar {
+    transition: width 0.5s ease;
 }
 
 /* Chart area */
 canvas {
     max-width: 100%;
+}
+
+/* Enhanced card colors for dark/light mode */
+[data-bs-theme="dark"] .card {
+    background-color: var(--bg-card);
+}
+
+[data-bs-theme="dark"] .card-header.bg-primary,
+[data-bs-theme="dark"] .card-header.bg-info,
+[data-bs-theme="dark"] .card-header.bg-success,
+[data-bs-theme="dark"] .card-header.bg-secondary {
+    color: var(--text-white) !important;
+}
+
+[data-bs-theme="light"] .card-header.bg-primary,
+[data-bs-theme="light"] .card-header.bg-info,
+[data-bs-theme="light"] .card-header.bg-success,
+[data-bs-theme="light"] .card-header.bg-secondary {
+    color: var(--text-white) !important;
+}
+
+/* Improved text readability in light mode */
+[data-bs-theme="light"] body {
+    color: #333;
+}
+
+/* Icon colors */
+.text-primary {
+    color: #4a89dc !important;
+}
+
+.text-success {
+    color: #37bc9b !important;
+}
+
+.text-warning {
+    color: #ffce54 !important;
+}
+
+.text-danger {
+    color: #da4453 !important;
 }
 
 /* Responsive font size adjustments */
