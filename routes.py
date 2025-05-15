@@ -59,10 +59,8 @@ def predict():
             'family_history': family_history
         }
         
-        # Create a health record object
+        # Create a health record object without a user_id
         record = HealthRecord()
-        # Set the fields manually to avoid constructor errors
-        record.user_id = 1  # Default user ID
         record.age = form_data['age']
         record.gender = form_data['gender']
         record.heart_rate = form_data['heart_rate']
