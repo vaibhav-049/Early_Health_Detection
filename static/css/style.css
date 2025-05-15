@@ -40,6 +40,7 @@ main {
     --text-light: #d1d1d1;
     --bg-dark: #121212;
     --bg-card: #1e1e1e;
+    --text-navbar: #ffffff;
 }
 
 [data-bs-theme="light"] {
@@ -47,6 +48,12 @@ main {
     --text-light: #212529;
     --bg-dark: #f8f9fa;
     --bg-card: #ffffff;
+    --text-navbar: #212529;
+}
+
+/* Navbar text color adjustment */
+.text-navbar {
+    color: var(--text-navbar) !important;
 }
 
 /* Form elements */

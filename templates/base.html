@@ -24,7 +24,7 @@
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="fas fa-heartbeat me-2 text-primary"></i>
-                <span class="fw-bold">Health Risk Predictor</span>
+                <span class="fw-bold text-navbar">Health Risk Predictor</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,10 +33,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
+                        <a class="nav-link text-navbar {% if request.path == '/' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="{{ url_for('about') }}">About</a>
+                        <a class="nav-link text-navbar {% if request.path == '/about' %}active{% endif %}" href="{{ url_for('about') }}">About</a>
                     </li>
                     <!-- Theme toggle -->
                     <li class="nav-item d-flex align-items-center ms-3">
