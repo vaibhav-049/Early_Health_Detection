@@ -2,104 +2,142 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-lg-8 mx-auto">
-        <div class="card mb-4 shadow">
-            <div class="card-header bg-info text-white">
-                <h2 class="my-2"><i class="fas fa-info-circle me-2"></i>About This Project</h2>
+    <div class="col-lg-10 mx-auto">
+        <div class="text-center mb-4">
+            <h1 class="display-5 mb-3">About This Project</h1>
+            <p class="lead">A simple BTech 2nd Year project on health risk prediction</p>
+        </div>
+        
+        <!-- About the Project -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-info-circle me-2"></i>Project Overview</h3>
             </div>
             <div class="card-body">
-                <h3>Early Health Detection System</h3>
-                <p class="lead">This application uses machine learning to predict potential health risks based on common health metrics.</p>
-                
-                <p>Our system employs the <strong>Naive Bayes algorithm</strong>, a probabilistic classifier that applies Bayes' theorem with strong (naive) independence assumptions between features. Despite its simplicity, Naive Bayes has proven effective for many real-world situations, including disease prediction and health risk assessment.</p>
-                
-                <h4 class="mt-4">How the Naive Bayes Algorithm Works</h4>
-                <p>Naive Bayes works by:</p>
-                <ul>
-                    <li>Learning the probability of each feature given each class from the training data</li>
-                    <li>Assuming independence between features (the "naive" part)</li>
-                    <li>Using Bayes' theorem to calculate the probability of each class given a set of features</li>
-                    <li>Selecting the class with the highest probability as the prediction</li>
-                </ul>
-                
-                <div class="alert alert-info mt-3">
-                    <h5><i class="fas fa-lightbulb me-2"></i>Naive Bayes Formula</h5>
-                    <p class="mb-0">
-                        P(class|features) = P(features|class) × P(class) / P(features)
-                    </p>
-                </div>
-                
-                <h4 class="mt-4">Data and Training</h4>
-                <p>The system is trained on a dataset containing various health metrics and their associated risk levels. The current implementation uses a sample dataset that can be easily replaced with actual medical data for real-world applications.</p>
-                
-                <h4 class="mt-4">Limitations</h4>
-                <p>While this system provides a useful risk assessment, it has several limitations:</p>
-                <ul>
-                    <li>It relies on the quality and comprehensiveness of the training data</li>
-                    <li>The "naive" assumption of feature independence may not hold in real medical contexts</li>
-                    <li>This is not a substitute for professional medical advice or diagnosis</li>
-                    <li>Results should be interpreted as risk indicators rather than definitive health assessments</li>
-                </ul>
-                
-                <div class="alert alert-warning mt-3">
-                    <strong>Important Disclaimer:</strong> This application is for educational and informational purposes only. Always consult with a qualified healthcare professional for medical advice, diagnosis, or treatment.
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>This is a simple health risk prediction system that uses the Naive Bayes machine learning algorithm to predict whether a person has a low, medium, or high health risk based on their health metrics.</p>
+                        
+                        <h4 class="mt-4">What is Naive Bayes?</h4>
+                        <p>Naive Bayes is a simple machine learning algorithm based on Bayes' theorem. It's called "naive" because it assumes all features are independent of each other (which isn't usually true in real life, but the algorithm still works well for many problems).</p>
+                        
+                        <div class="text-center my-4">
+                            <div class="card mx-auto p-3" style="max-width: 450px;">
+                                <h5>Bayes' Theorem:</h5>
+                                <p class="mb-0">P(A|B) = P(B|A) × P(A) / P(B)</p>
+                            </div>
+                        </div>
+                        
+                        <p>The algorithm learns from our sample health data and then uses that learning to predict health risks for new inputs.</p>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <h3 class="my-2"><i class="fas fa-code me-2"></i>Technical Details</h3>
+        <!-- How it Works -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-cogs me-2"></i>How It Works</h3>
             </div>
             <div class="card-body">
-                <h4>Technology Stack</h4>
-                <div class="row mt-3">
+                <div class="row mb-4">
                     <div class="col-md-6">
-                        <div class="card bg-dark mb-3">
-                            <div class="card-header">Backend</div>
+                        <div class="card h-100">
                             <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><i class="fab fa-python me-2"></i>Flask web framework</li>
-                                    <li><i class="fas fa-brain me-2"></i>scikit-learn for machine learning</li>
-                                    <li><i class="fas fa-table me-2"></i>pandas for data processing</li>
-                                    <li><i class="fas fa-calculator me-2"></i>numpy for numerical operations</li>
+                                <h4 class="card-title">Step 1: Training</h4>
+                                <p>The model is trained using a sample dataset with health metrics like:</p>
+                                <ul>
+                                    <li>Age and gender</li>
+                                    <li>Heart rate and blood pressure</li>
+                                    <li>Cholesterol and blood sugar</li>
+                                    <li>BMI and lifestyle factors</li>
                                 </ul>
+                                <p>Each record in our dataset has a known risk level (low, medium, or high).</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card bg-dark mb-3">
-                            <div class="card-header">Frontend</div>
+                        <div class="card h-100">
                             <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><i class="fab fa-html5 me-2"></i>HTML5 for structure</li>
-                                    <li><i class="fab fa-css3-alt me-2"></i>CSS3 for styling</li>
-                                    <li><i class="fab fa-js me-2"></i>JavaScript for interactivity</li>
-                                    <li><i class="fas fa-chart-pie me-2"></i>Chart.js for visualizations</li>
-                                    <li><i class="fab fa-bootstrap me-2"></i>Bootstrap for responsive design</li>
-                                </ul>
+                                <h4 class="card-title">Step 2: Prediction</h4>
+                                <p>When you enter your health information:</p>
+                                <ol>
+                                    <li>Your data is sent to our Flask server</li>
+                                    <li>The Naive Bayes model calculates the probability of each risk level</li>
+                                    <li>The model assigns the most likely risk level to your data</li>
+                                    <li>You get a visual report of your health risk</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <h4 class="mt-3">Implementation Details</h4>
-                <p>The application follows a standard Flask architecture:</p>
-                <ol>
-                    <li>User inputs health data through the web form</li>
-                    <li>Data is sent to the Flask backend for processing</li>
-                    <li>The Naive Bayes model analyzes the data and generates predictions</li>
-                    <li>Results are returned to the user with visualizations and recommendations</li>
-                </ol>
-                
-                <h4 class="mt-3">Data Management</h4>
-                <p>The system is designed to work with a temporary dataset that can be easily replaced with a real dataset. To use your own dataset, replace the file at <code>data/sample_health_data.csv</code> or set the environment variable <code>HEALTH_DATASET_PATH</code> to point to your dataset file.</p>
-                
-                <div class="alert alert-info mt-3">
-                    <h5><i class="fas fa-database me-2"></i>Dataset Format</h5>
-                    <p>Your dataset should have a similar structure to the sample dataset, with health metrics as columns and a <code>risk_level</code> column containing the classification labels (low, medium, high).</p>
+                <div class="alert alert-warning">
+                    <strong>Important:</strong> This is a student project created for educational purposes. The predictions are not medically validated and should not be used for real health decisions.
                 </div>
             </div>
+        </div>
+        
+        <!-- Technologies Used -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-laptop-code me-2"></i>Technologies Used</h3>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; background-color: rgba(var(--bs-primary-rgb), 0.1);">
+                            <i class="fab fa-python fa-2x text-primary"></i>
+                        </div>
+                        <h5>Python/Flask</h5>
+                        <p>Web server and backend</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; background-color: rgba(var(--bs-primary-rgb), 0.1);">
+                            <i class="fas fa-brain fa-2x text-primary"></i>
+                        </div>
+                        <h5>scikit-learn</h5>
+                        <p>Machine learning library</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; background-color: rgba(var(--bs-primary-rgb), 0.1);">
+                            <i class="fab fa-bootstrap fa-2x text-primary"></i>
+                        </div>
+                        <h5>Bootstrap</h5>
+                        <p>UI framework</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; background-color: rgba(var(--bs-primary-rgb), 0.1);">
+                            <i class="fas fa-chart-pie fa-2x text-primary"></i>
+                        </div>
+                        <h5>Chart.js</h5>
+                        <p>Data visualization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Project Info -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-user-graduate me-2"></i>About Me</h3>
+            </div>
+            <div class="card-body">
+                <p>This project was created as part of my BTech 2nd Year coursework. It demonstrates the use of machine learning algorithms for health risk prediction.</p>
+                <p>The application includes:</p>
+                <ul>
+                    <li>A simple user interface for entering health data</li>
+                    <li>Implementation of the Naive Bayes algorithm</li>
+                    <li>Data visualization using Chart.js</li>
+                    <li>Dark/light mode toggle for better user experience</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>Back to Home
+            </a>
         </div>
     </div>
 </div>

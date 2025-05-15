@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="dark" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Detection System</title>
+    <title>Health Risk Predictor</title>
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS (Dark theme by default) -->
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet" id="theme-css">
     
-    <!-- Font Awesome -->
+    <!-- Font Awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js -->
+    <!-- Chart.js for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="fas fa-heartbeat me-2"></i>
-                Health Detection System
+                Health Risk Predictor
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,16 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <!-- Theme toggle -->
+                    <li class="nav-item d-flex align-items-center ms-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkModeToggle" checked>
+                            <label class="form-check-label" for="darkModeToggle">
+                                <i class="fas fa-moon" id="darkIcon"></i>
+                                <i class="fas fa-sun d-none" id="lightIcon"></i>
+                            </label>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -62,15 +72,16 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
+    <footer class="py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5><i class="fas fa-heartbeat me-2"></i> Health Detection System</h5>
-                    <p>An early health risk detection system using machine learning.</p>
+                    <h5><i class="fas fa-heartbeat me-2"></i> Health Risk Predictor</h5>
+                    <p>A simple health risk prediction system using Naive Bayes algorithm.</p>
+                    <p>Created as part of BTech 2nd Year Project</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <h5>Powered By</h5>
+                    <h5>Technologies Used</h5>
                     <ul class="list-inline">
                         <li class="list-inline-item"><i class="fab fa-python"></i> Flask</li>
                         <li class="list-inline-item"><i class="fas fa-brain"></i> Scikit-learn</li>
@@ -81,7 +92,7 @@
             </div>
             <hr>
             <div class="text-center">
-                <p>&copy; 2023 Health Detection System. All rights reserved.</p>
+                <p>&copy; 2025 Health Risk Predictor. Created for academic purposes.</p>
             </div>
         </div>
     </footer>
@@ -91,6 +102,42 @@
     
     <!-- Custom JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Dark mode toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const htmlRoot = document.getElementById('htmlRoot');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkIcon = document.getElementById('darkIcon');
+            const lightIcon = document.getElementById('lightIcon');
+            const savedTheme = localStorage.getItem('theme');
+            
+            // Apply saved theme if available
+            if (savedTheme === 'light') {
+                htmlRoot.setAttribute('data-bs-theme', 'light');
+                darkModeToggle.checked = false;
+                darkIcon.classList.add('d-none');
+                lightIcon.classList.remove('d-none');
+            }
+            
+            // Toggle theme when switch is clicked
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Dark mode
+                    htmlRoot.setAttribute('data-bs-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    darkIcon.classList.remove('d-none');
+                    lightIcon.classList.add('d-none');
+                } else {
+                    // Light mode
+                    htmlRoot.setAttribute('data-bs-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    darkIcon.classList.add('d-none');
+                    lightIcon.classList.remove('d-none');
+                }
+            });
+        });
+    </script>
     
     {% block scripts %}{% endblock %}
 </body>

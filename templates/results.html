@@ -3,228 +3,237 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-10 mx-auto">
-        <div class="card mb-4 shadow">
-            <div class="card-header bg-primary text-white">
-                <h2 class="my-2"><i class="fas fa-poll me-2"></i>Health Assessment Results</h2>
+        <div class="text-center mb-4">
+            <h1 class="display-5 mb-3">Your Health Results</h1>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-heartbeat me-2"></i>Risk Assessment</h3>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="text-center mb-4">
-                            <div class="display-1 mb-2">
-                                {% if prediction.outcome|lower == 'high' %}
-                                <i class="fas fa-exclamation-triangle text-danger"></i>
-                                {% elif prediction.outcome|lower == 'medium' %}
-                                <i class="fas fa-exclamation-circle text-warning"></i>
-                                {% else %}
-                                <i class="fas fa-check-circle text-success"></i>
-                                {% endif %}
-                            </div>
-                            <h3 class="
-                                {% if prediction.outcome|lower == 'high' %}text-danger
-                                {% elif prediction.outcome|lower == 'medium' %}text-warning
-                                {% else %}text-success{% endif %}
-                            ">
-                                {{ prediction.outcome|capitalize }} Risk
-                            </h3>
-                            <p class="lead">Risk Score: {{ prediction.risk_score }}</p>
-                            <div class="progress mb-3" style="height: 25px;">
-                                <div class="progress-bar 
-                                    {% if prediction.outcome|lower == 'high' %}bg-danger
-                                    {% elif prediction.outcome|lower == 'medium' %}bg-warning
-                                    {% else %}bg-success{% endif %}" 
-                                    role="progressbar" 
-                                    style="width: {{ prediction.risk_score }}%;" 
-                                    aria-valuenow="{{ prediction.risk_score }}" 
-                                    aria-valuemin="0" 
-                                    aria-valuemax="100">
-                                    {{ prediction.risk_score }}%
-                                </div>
-                            </div>
-                            <p>Confidence: {{ prediction.probability }}%</p>
+                    <!-- Risk Score Display -->
+                    <div class="col-md-6 text-center mb-4">
+                        <div class="display-1 mb-3">
+                            {% if prediction.outcome|lower == 'high' %}
+                            <i class="fas fa-exclamation-triangle text-danger"></i>
+                            {% elif prediction.outcome|lower == 'medium' %}
+                            <i class="fas fa-exclamation-circle text-warning"></i>
+                            {% else %}
+                            <i class="fas fa-check-circle text-success"></i>
+                            {% endif %}
                         </div>
+                        <h2 class="
+                            {% if prediction.outcome|lower == 'high' %}text-danger
+                            {% elif prediction.outcome|lower == 'medium' %}text-warning
+                            {% else %}text-success{% endif %}
+                        ">
+                            {{ prediction.outcome|capitalize }} Risk
+                        </h2>
+                        <p class="lead">Risk Score: {{ prediction.risk_score }}</p>
                         
-                        <div class="mt-4">
-                            <h4><i class="fas fa-comment-medical me-2"></i>Assessment Summary</h4>
-                            <div class="card bg-dark">
-                                <div class="card-body">
-                                    {% if prediction.outcome|lower == 'high' %}
-                                    <p>Your health metrics indicate a <strong>high risk</strong> of developing health issues. It's recommended to consult with a healthcare professional promptly.</p>
-                                    <p>Focus on improving your modifiable risk factors and consider regular health check-ups.</p>
-                                    {% elif prediction.outcome|lower == 'medium' %}
-                                    <p>Your health metrics indicate a <strong>medium risk</strong> level. While not immediately concerning, there are areas that could be improved.</p>
-                                    <p>Consider lifestyle modifications and regular health monitoring to reduce your risk factors.</p>
-                                    {% else %}
-                                    <p>Your health metrics indicate a <strong>low risk</strong> profile. You're on the right track with your health!</p>
-                                    <p>Continue maintaining your healthy lifestyle and schedule regular preventive check-ups.</p>
-                                    {% endif %}
-                                    <p class="mb-0 font-italic text-muted">Note: This assessment is based on the information provided and should not replace professional medical advice.</p>
-                                </div>
+                        <!-- Progress Bar -->
+                        <div class="progress mb-3" style="height: 20px;">
+                            <div class="progress-bar 
+                                {% if prediction.outcome|lower == 'high' %}bg-danger
+                                {% elif prediction.outcome|lower == 'medium' %}bg-warning
+                                {% else %}bg-success{% endif %}" 
+                                role="progressbar" 
+                                style="width: {{ prediction.risk_score }}%;" 
+                                aria-valuenow="{{ prediction.risk_score }}" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                {{ prediction.risk_score }}%
+                            </div>
+                        </div>
+                        <p>Model Confidence: {{ prediction.probability }}%</p>
+                        
+                        <!-- Description -->
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                {% if prediction.outcome|lower == 'high' %}
+                                <p>Your health metrics suggest a <strong>high risk</strong> level. Consider consulting a doctor for advice.</p>
+                                {% elif prediction.outcome|lower == 'medium' %}
+                                <p>Your health metrics suggest a <strong>medium risk</strong> level. Some lifestyle changes may be helpful.</p>
+                                {% else %}
+                                <p>Your health metrics suggest a <strong>low risk</strong> level. You're doing well!</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     
+                    <!-- Risk Factors Chart -->
                     <div class="col-md-6">
-                        <h4><i class="fas fa-chart-bar me-2"></i>Risk Factors Analysis</h4>
-                        <div class="chart-container" style="height: 300px;">
+                        <h4><i class="fas fa-chart-bar me-2"></i>Risk Factors</h4>
+                        <div style="height: 300px;">
                             <canvas id="featureImportanceChart"></canvas>
-                        </div>
-                        
-                        <h4 class="mt-4"><i class="fas fa-clipboard-list me-2"></i>Your Input Data</h4>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Metric</th>
-                                        <th>Your Value</th>
-                                        <th>Recommendation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Age</td>
-                                        <td>{{ user_input.age }}</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td>{{ user_input.gender|capitalize }}</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Heart Rate</td>
-                                        <td>{{ user_input.heart_rate }} bpm</td>
-                                        <td>
-                                            {% if user_input.heart_rate|int < 60 %}
-                                            Below normal range
-                                            {% elif user_input.heart_rate|int > 100 %}
-                                            Above normal range
-                                            {% else %}
-                                            Normal range
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Blood Pressure</td>
-                                        <td>{{ user_input.blood_pressure_systolic }}/{{ user_input.blood_pressure_diastolic }} mmHg</td>
-                                        <td>
-                                            {% if user_input.blood_pressure_systolic|int > 130 or user_input.blood_pressure_diastolic|int > 80 %}
-                                            Higher than recommended
-                                            {% else %}
-                                            Normal range
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cholesterol</td>
-                                        <td>{{ user_input.cholesterol }} mg/dL</td>
-                                        <td>
-                                            {% if user_input.cholesterol|int > 200 %}
-                                            Above desirable level
-                                            {% else %}
-                                            Desirable level
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Blood Sugar</td>
-                                        <td>{{ user_input.blood_sugar }} mg/dL</td>
-                                        <td>
-                                            {% if user_input.blood_sugar|float > 100 %}
-                                            Above normal range
-                                            {% else %}
-                                            Normal range
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>BMI</td>
-                                        <td>{{ user_input.bmi }}</td>
-                                        <td>
-                                            {% if user_input.bmi|float < 18.5 %}
-                                            Underweight
-                                            {% elif user_input.bmi|float < 25 %}
-                                            Normal weight
-                                            {% elif user_input.bmi|float < 30 %}
-                                            Overweight
-                                            {% else %}
-                                            Obese
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Smoking</td>
-                                        <td>{{ user_input.smoking }}</td>
-                                        <td>
-                                            {% if user_input.smoking == 'yes' %}
-                                            Consider quitting
-                                            {% else %}
-                                            Keep it up!
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alcohol Consumption</td>
-                                        <td>{{ user_input.alcohol_consumption }}</td>
-                                        <td>
-                                            {% if user_input.alcohol_consumption == 'yes' %}
-                                            Moderate consumption recommended
-                                            {% else %}
-                                            Good choice!
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Physical Activity</td>
-                                        <td>{{ user_input.physical_activity }} hours/week</td>
-                                        <td>
-                                            {% if user_input.physical_activity|int < 2.5 %}
-                                            Below recommended level
-                                            {% else %}
-                                            Meets recommendations
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Family History</td>
-                                        <td>{{ user_input.family_history }}</td>
-                                        <td>
-                                            {% if user_input.family_history == 'yes' %}
-                                            Regular check-ups recommended
-                                            {% else %}
-                                            Lower genetic risk
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-                
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
-                    <a href="{{ url_for('index') }}" class="btn btn-secondary">
-                        <i class="fas fa-redo me-2"></i>Start New Assessment
-                    </a>
-                    <button class="btn btn-info" id="printResults">
-                        <i class="fas fa-print me-2"></i>Print Results
-                    </button>
+            </div>
+        </div>
+        
+        <!-- User Data Summary -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="my-2"><i class="fas fa-clipboard-list me-2"></i>Your Health Data</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Your Value</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Age</td>
+                                <td>{{ user_input.age }}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>{{ user_input.gender|capitalize }}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Heart Rate</td>
+                                <td>{{ user_input.heart_rate }} bpm</td>
+                                <td>
+                                    {% if user_input.heart_rate|int < 60 %}
+                                    <span class="badge bg-warning">Below normal</span>
+                                    {% elif user_input.heart_rate|int > 100 %}
+                                    <span class="badge bg-warning">Above normal</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Blood Pressure</td>
+                                <td>{{ user_input.blood_pressure_systolic }}/{{ user_input.blood_pressure_diastolic }} mmHg</td>
+                                <td>
+                                    {% if user_input.blood_pressure_systolic|int > 130 or user_input.blood_pressure_diastolic|int > 80 %}
+                                    <span class="badge bg-warning">High</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Cholesterol</td>
+                                <td>{{ user_input.cholesterol }} mg/dL</td>
+                                <td>
+                                    {% if user_input.cholesterol|int > 200 %}
+                                    <span class="badge bg-warning">High</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Blood Sugar</td>
+                                <td>{{ user_input.blood_sugar }} mg/dL</td>
+                                <td>
+                                    {% if user_input.blood_sugar|float > 100 %}
+                                    <span class="badge bg-warning">High</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BMI</td>
+                                <td>{{ user_input.bmi }}</td>
+                                <td>
+                                    {% if user_input.bmi|float < 18.5 %}
+                                    <span class="badge bg-warning">Underweight</span>
+                                    {% elif user_input.bmi|float < 25 %}
+                                    <span class="badge bg-success">Normal</span>
+                                    {% elif user_input.bmi|float < 30 %}
+                                    <span class="badge bg-warning">Overweight</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Obese</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Smoking</td>
+                                <td>{{ user_input.smoking }}</td>
+                                <td>
+                                    {% if user_input.smoking == 'yes' %}
+                                    <span class="badge bg-danger">Risk factor</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Good</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Alcohol</td>
+                                <td>{{ user_input.alcohol_consumption }}</td>
+                                <td>
+                                    {% if user_input.alcohol_consumption == 'yes' %}
+                                    <span class="badge bg-warning">Moderate</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Good</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Physical Activity</td>
+                                <td>{{ user_input.physical_activity }} hours/week</td>
+                                <td>
+                                    {% if user_input.physical_activity|int < 2.5 %}
+                                    <span class="badge bg-warning">Low</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Good</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Family History</td>
+                                <td>{{ user_input.family_history }}</td>
+                                <td>
+                                    {% if user_input.family_history == 'yes' %}
+                                    <span class="badge bg-warning">Risk factor</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Good</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+        
+        <div class="alert alert-warning">
+            <strong>Important:</strong> This is a student project. Results are based on a simple algorithm and should not be used for medical decisions.
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>Back to Home
+            </a>
+            <button class="btn btn-secondary" id="printResults">
+                <i class="fas fa-print me-2"></i>Print Results
+            </button>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/chart-config.js') }}"></script>
 <script>
     // Feature importance data from the backend
     const featureImportance = {{ prediction.features_importance|tojson }};
     
-    // Prepare data for chart
+    // Prepare data for chart - convert keys to readable labels
     const labels = Object.keys(featureImportance).map(key => {
-        // Convert snake_case to readable format
         return key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     });
     
@@ -237,7 +246,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Risk Factor Weight',
+                label: 'Factor Importance',
                 data: data,
                 backgroundColor: 'rgba(54, 162, 235, 0.7)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -250,11 +259,7 @@
             maintainAspectRatio: false,
             scales: {
                 x: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Relative Importance'
-                    }
+                    beginAtZero: true
                 }
             },
             plugins: {
@@ -264,7 +269,7 @@
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `Weight: ${(context.raw * 100).toFixed(2)}%`;
+                            return `Weight: ${(context.raw * 100).toFixed(1)}%`;
                         }
                     }
                 }

@@ -29,27 +29,52 @@ def about():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Extract form data
+        # Get form values safely with fallbacks to avoid type errors
+        age = request.form.get('age')
+        gender = request.form.get('gender')
+        heart_rate = request.form.get('heart_rate')
+        bp_systolic = request.form.get('blood_pressure_systolic')
+        bp_diastolic = request.form.get('blood_pressure_diastolic')
+        cholesterol = request.form.get('cholesterol')
+        blood_sugar = request.form.get('blood_sugar')
+        bmi = request.form.get('bmi')
+        smoking = request.form.get('smoking') == 'yes'
+        alcohol = request.form.get('alcohol_consumption') == 'yes'
+        physical = request.form.get('physical_activity')
+        family_history = request.form.get('family_history') == 'yes'
+        
+        # Convert to proper types for the model
         form_data = {
-            'age': int(request.form.get('age')),
-            'gender': request.form.get('gender'),
-            'heart_rate': int(request.form.get('heart_rate')),
-            'blood_pressure_systolic': int(request.form.get('blood_pressure_systolic')),
-            'blood_pressure_diastolic': int(request.form.get('blood_pressure_diastolic')),
-            'cholesterol': int(request.form.get('cholesterol')),
-            'blood_sugar': float(request.form.get('blood_sugar')),
-            'bmi': float(request.form.get('bmi')),
-            'smoking': request.form.get('smoking') == 'yes',
-            'alcohol_consumption': request.form.get('alcohol_consumption') == 'yes',
-            'physical_activity': int(request.form.get('physical_activity')),
-            'family_history': request.form.get('family_history') == 'yes'
+            'age': int(age) if age else 30,
+            'gender': gender,
+            'heart_rate': int(heart_rate) if heart_rate else 70,
+            'blood_pressure_systolic': int(bp_systolic) if bp_systolic else 120,
+            'blood_pressure_diastolic': int(bp_diastolic) if bp_diastolic else 80,
+            'cholesterol': int(cholesterol) if cholesterol else 180,
+            'blood_sugar': float(blood_sugar) if blood_sugar else 90.0,
+            'bmi': float(bmi) if bmi else 22.5,
+            'smoking': smoking,
+            'alcohol_consumption': alcohol,
+            'physical_activity': int(physical) if physical else 3,
+            'family_history': family_history
         }
         
         # Create a health record object
-        record = HealthRecord(
-            user_id=1,  # Default user ID (in a real app, this would come from the logged-in user)
-            **form_data
-        )
+        record = HealthRecord()
+        # Set the fields manually to avoid constructor errors
+        record.user_id = 1  # Default user ID
+        record.age = form_data['age']
+        record.gender = form_data['gender']
+        record.heart_rate = form_data['heart_rate']
+        record.blood_pressure_systolic = form_data['blood_pressure_systolic']
+        record.blood_pressure_diastolic = form_data['blood_pressure_diastolic']
+        record.cholesterol = form_data['cholesterol']
+        record.blood_sugar = form_data['blood_sugar']
+        record.bmi = form_data['bmi']
+        record.smoking = form_data['smoking']
+        record.alcohol_consumption = form_data['alcohol_consumption']
+        record.physical_activity = form_data['physical_activity']
+        record.family_history = form_data['family_history']
         
         # Convert to format needed for prediction
         input_data = record.to_dict()

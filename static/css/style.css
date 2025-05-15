@@ -1,64 +1,90 @@
-/* Custom CSS styles */
+/* Simple CSS for BTech 2nd Year Project */
 
-/* Card hover effect */
+/* Basic Layout */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+    flex: 1;
+}
+
+/* Card styling */
 .card {
-    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Custom form styles */
+/* Form elements */
 .form-control:focus, .form-select:focus {
     border-color: var(--bs-primary);
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
-/* Custom alert styles */
-.alert {
+/* Rounded elements */
+.alert, .card {
     border-radius: 0.5rem;
 }
 
-/* Feature icons */
-.feature-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    background-color: var(--bs-dark);
-    margin: 0 auto 1rem;
-}
-
-/* Results page styling */
-.risk-badge {
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
+/* Navigation */
+.navbar-nav .nav-link.active {
     font-weight: bold;
+    border-bottom: 2px solid var(--bs-primary);
 }
 
-.risk-low {
-    background-color: var(--bs-success);
-    color: white;
+/* Dark mode toggle adjustments */
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
 }
 
-.risk-medium {
-    background-color: var(--bs-warning);
-    color: white;
+.form-switch .form-check-input {
+    width: 2.5em;
+    margin-left: -2.8em;
+    cursor: pointer;
 }
 
-.risk-high {
-    background-color: var(--bs-danger);
-    color: white;
+.form-check-label {
+    cursor: pointer;
 }
 
-/* Chart container */
-.chart-container {
-    margin: 1.5rem 0;
-    position: relative;
+/* Badge styling */
+.badge {
+    padding: 0.4em 0.7em;
+    font-weight: normal;
+}
+
+/* Progress bar styling */
+.progress {
+    height: 1.2rem;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+}
+
+/* Chart area */
+canvas {
+    max-width: 100%;
+}
+
+/* Responsive font size adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    h3 {
+        font-size: 1.3rem;
+    }
 }
 
 /* Print styles */
@@ -68,42 +94,12 @@
     }
     
     .card {
-        border: none !important;
+        border: 1px solid #ddd !important;
         box-shadow: none !important;
-    }
-    
-    .card-header {
-        background-color: #f8f9fa !important;
-        color: #000 !important;
     }
     
     body {
         color: #000 !important;
         background-color: #fff !important;
     }
-}
-
-/* Navbar active item */
-.navbar-nav .nav-link.active {
-    font-weight: bold;
-    border-bottom: 2px solid var(--bs-primary);
-}
-
-/* Footer styling */
-footer {
-    margin-top: auto;
-}
-
-html, body {
-    height: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex: 1;
 }
