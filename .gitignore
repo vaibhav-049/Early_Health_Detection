@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Database files
+instance/health_detection.db
+
+# Lock files
+uv.lock
+
+# Environment variables or secrets
+.env
+
+# OS or IDE files
+.DS_Store
+.vscode/
+
+# Replit
+.replit
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
