@@ -90,6 +90,13 @@ def predict():
         # Get feature importance for visualization
         features_importance = get_feature_importance(model, vectorizer)
         
+        # Convert NumPy types to Python native types to avoid database errors
+        if hasattr(risk_score, 'item'):  # Convert NumPy types to Python native types
+            risk_score = float(risk_score)
+        
+        if hasattr(prediction, 'item'):  # Convert NumPy string to Python string
+            prediction = str(prediction)
+        
         # Save the record with prediction results
         record.risk_score = risk_score
         record.risk_category = prediction
