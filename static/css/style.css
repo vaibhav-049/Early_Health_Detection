@@ -1,0 +1,109 @@
+/* Custom CSS styles */
+
+/* Card hover effect */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Custom form styles */
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Custom alert styles */
+.alert {
+    border-radius: 0.5rem;
+}
+
+/* Feature icons */
+.feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: var(--bs-dark);
+    margin: 0 auto 1rem;
+}
+
+/* Results page styling */
+.risk-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: bold;
+}
+
+.risk-low {
+    background-color: var(--bs-success);
+    color: white;
+}
+
+.risk-medium {
+    background-color: var(--bs-warning);
+    color: white;
+}
+
+.risk-high {
+    background-color: var(--bs-danger);
+    color: white;
+}
+
+/* Chart container */
+.chart-container {
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+/* Print styles */
+@media print {
+    nav, footer, .btn {
+        display: none !important;
+    }
+    
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .card-header {
+        background-color: #f8f9fa !important;
+        color: #000 !important;
+    }
+    
+    body {
+        color: #000 !important;
+        background-color: #fff !important;
+    }
+}
+
+/* Navbar active item */
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid var(--bs-primary);
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
