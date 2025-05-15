@@ -56,6 +56,17 @@ main {
     color: var(--text-navbar) !important;
 }
 
+/* Ensure white text in dark mode for navbar */
+[data-bs-theme="dark"] .navbar-brand,
+[data-bs-theme="dark"] .nav-link {
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+    color: #ffffff !important;
+    border-bottom-color: var(--bs-primary);
+}
+
 /* Form elements */
 .form-control:focus, .form-select:focus {
     border-color: var(--bs-primary);
@@ -71,6 +82,14 @@ main {
 .navbar {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 0.8rem 0;
+}
+
+[data-bs-theme="dark"] .navbar {
+    background-color: #121212;
+}
+
+[data-bs-theme="light"] .navbar {
+    background-color: #ffffff;
 }
 
 .navbar-nav .nav-link.active {
