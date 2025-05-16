@@ -61,6 +61,7 @@ def predict():
         
         # Create a health record object without a user_id
         record = HealthRecord()
+        record.user_id = None  # Allow anonymous record for demo/testing
         record.age = form_data['age']
         record.gender = form_data['gender']
         record.heart_rate = form_data['heart_rate']
