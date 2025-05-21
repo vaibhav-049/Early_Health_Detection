@@ -16,19 +16,95 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>This is a simple health risk prediction system that uses the Naive Bayes machine learning algorithm to predict whether a person has a low, medium, or high health risk based on their health metrics.</p>
+                        <p>The Early Health Detection system is a comprehensive health assessment tool that offers two main functionalities:</p>
                         
-                        <h4 class="mt-4">What is Naive Bayes?</h4>
-                        <p>Naive Bayes is a simple machine learning algorithm based on Bayes' theorem. It's called "naive" because it assumes all features are independent of each other (which isn't usually true in real life, but the algorithm still works well for many problems).</p>
-                        
-                        <div class="text-center my-4">
-                            <div class="card mx-auto p-3" style="max-width: 450px;">
-                                <h5>Bayes' Theorem:</h5>
-                                <p class="mb-0">P(A|B) = P(B|A) × P(A) / P(B)</p>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Health Risk Assessment</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Predicts whether a person has a low, medium, or high health risk based on their health metrics including:</p>
+                                        <ul>
+                                            <li>Age and gender</li>
+                                            <li>Heart rate and blood pressure</li>
+                                            <li>Cholesterol and blood sugar levels</li>
+                                            <li>BMI and lifestyle factors</li>
+                                            <li>Family history of diseases</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Disease Prediction</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Identifies possible diseases based on symptoms reported by the user. The system can detect 41 different diseases including:</p>
+                                        <ul>
+                                            <li>Fungal infections, Allergies, GERD</li>
+                                            <li>Diabetes, Asthma, Hypertension</li>
+                                            <li>Malaria, Dengue, Tuberculosis</li>
+                                            <li>Common Cold, Pneumonia, Heart attack</li>
+                                            <li>And many more conditions</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <p>The algorithm learns from our sample health data and then uses that learning to predict health risks for new inputs.</p>
+                        <h4 class="mt-5">Machine Learning Algorithms</h4>
+                        <p>Our system implements multiple machine learning algorithms to provide accurate predictions:</p>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">Naive Bayes</div>
+                                    <div class="card-body">
+                                        <p>A probabilistic classifier based on Bayes' theorem. It's called "naive" because it assumes all features are independent of each other.</p>
+                                        <div class="text-center my-2">
+                                            <div class="card mx-auto p-2" style="max-width: 350px;">
+                                                <h6>Bayes' Theorem:</h6>
+                                                <p class="mb-0">P(A|B) = P(B|A) × P(A) / P(B)</p>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2">Works well for disease classification with many features.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">Decision Tree</div>
+                                    <div class="card-body">
+                                        <p>Creates a tree-like model of decisions based on feature values. Each internal node represents a test on a feature, each branch represents an outcome of the test, and each leaf node represents a class label.</p>
+                                        <p>Provides easily interpretable results and can handle both numerical and categorical data.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">Random Forest</div>
+                                    <div class="card-body">
+                                        <p>An ensemble learning method that constructs multiple decision trees during training and outputs the class that is the mode of the classes of the individual trees.</p>
+                                        <p>Reduces overfitting and provides higher accuracy than individual decision trees.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">Gradient Boosting</div>
+                                    <div class="card-body">
+                                        <p>A machine learning technique that produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees.</p>
+                                        <p>Builds models sequentially, with each new model correcting errors made by previously trained models.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,40 +116,178 @@
                 <h3 class="my-2"><i class="fas fa-cogs me-2"></i>How It Works</h3>
             </div>
             <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h4 class="card-title">Step 1: Training</h4>
-                                <p>The model is trained using a sample dataset with health metrics like:</p>
-                                <ul>
-                                    <li>Age and gender</li>
-                                    <li>Heart rate and blood pressure</li>
-                                    <li>Cholesterol and blood sugar</li>
-                                    <li>BMI and lifestyle factors</li>
-                                </ul>
-                                <p>Each record in our dataset has a known risk level (low, medium, or high).</p>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="risk-tab" data-bs-toggle="tab" data-bs-target="#risk" type="button" role="tab" aria-controls="risk" aria-selected="true">Health Risk Assessment</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="disease-tab" data-bs-toggle="tab" data-bs-target="#disease" type="button" role="tab" aria-controls="disease" aria-selected="false">Disease Prediction</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content pt-4" id="myTabContent">
+                    <!-- Health Risk Assessment Tab -->
+                    <div class="tab-pane fade show active" id="risk" role="tabpanel" aria-labelledby="risk-tab">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Step 1: Data Collection</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Users input their health metrics through a form:</p>
+                                        <ul>
+                                            <li>Age and gender</li>
+                                            <li>Heart rate and blood pressure</li>
+                                            <li>Cholesterol and blood sugar</li>
+                                            <li>BMI and lifestyle factors</li>
+                                            <li>Family history of diseases</li>
+                                        </ul>
+                                        <p>The system validates the inputs and prepares them for analysis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Step 2: Risk Analysis</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system processes the health metrics to determine risk level:</p>
+                                        <ol>
+                                            <li>Data is preprocessed and normalized</li>
+                                            <li>The model calculates the probability of each risk level (low, medium, high)</li>
+                                            <li>Risk factors are identified and weighted</li>
+                                            <li>A comprehensive risk score is generated</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Step 3: Results Visualization</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system presents the results in an easy-to-understand format:</p>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-chart-pie fa-3x text-primary mb-3"></i>
+                                                    <h6>Risk Category</h6>
+                                                    <p>Clear indication of whether the risk is low, medium, or high</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-chart-bar fa-3x text-primary mb-3"></i>
+                                                    <h6>Contributing Factors</h6>
+                                                    <p>Visualization of which factors contribute most to the risk</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-clipboard-list fa-3x text-primary mb-3"></i>
+                                                    <h6>Recommendations</h6>
+                                                    <p>Suggestions for improving health metrics and reducing risk</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h4 class="card-title">Step 2: Prediction</h4>
-                                <p>When you enter your health information:</p>
-                                <ol>
-                                    <li>Your data is sent to our Flask server</li>
-                                    <li>The Naive Bayes model calculates the probability of each risk level</li>
-                                    <li>The model assigns the most likely risk level to your data</li>
-                                    <li>You get a visual report of your health risk</li>
-                                </ol>
+                    
+                    <!-- Disease Prediction Tab -->
+                    <div class="tab-pane fade" id="disease" role="tabpanel" aria-labelledby="disease-tab">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Step 1: Symptom Selection</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Users select their symptoms from categorized lists:</p>
+                                        <ul>
+                                            <li>Skin symptoms (rash, itching, etc.)</li>
+                                            <li>Respiratory symptoms (cough, breathlessness, etc.)</li>
+                                            <li>Digestive symptoms (nausea, vomiting, etc.)</li>
+                                            <li>Pain and discomfort symptoms</li>
+                                            <li>General symptoms (fever, fatigue, etc.)</li>
+                                        </ul>
+                                        <p>Users can also search for specific symptoms and select an ML algorithm.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Step 2: Multi-Algorithm Analysis</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system processes the symptoms using multiple ML algorithms:</p>
+                                        <ol>
+                                            <li>Symptoms are encoded as binary features (present/absent)</li>
+                                            <li>Selected algorithm (or all algorithms) analyze the symptom pattern</li>
+                                            <li>Each algorithm calculates probability scores for possible diseases</li>
+                                            <li>Results are compared across algorithms for consensus</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Step 3: Comprehensive Results</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system presents detailed disease prediction results:</p>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-clipboard-check fa-3x text-success mb-3"></i>
+                                                    <h6>Most Likely Condition</h6>
+                                                    <p>Primary prediction with confidence score</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-list-ol fa-3x text-success mb-3"></i>
+                                                    <h6>Contributing Symptoms</h6>
+                                                    <p>Which symptoms were most significant in the prediction</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                                                    <h6>Algorithm Comparison</h6>
+                                                    <p>How different ML algorithms performed on the same symptoms</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="alert alert-warning">
-                    <strong>Important:</strong> This is a student project created for educational purposes. The predictions are not medically validated and should not be used for real health decisions.
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Medical Disclaimer</h5>
+                    <p><strong>Important:</strong> This is a student project created for educational purposes only.</p>
+                    <ul>
+                        <li>The health risk assessments and disease predictions are not medically validated.</li>
+                        <li>This application is not a substitute for professional medical advice, diagnosis, or treatment.</li>
+                        <li>Always consult with a qualified healthcare provider regarding any health concerns.</li>
+                        <li>Never disregard professional medical advice or delay seeking it because of something you have read on this application.</li>
+                        <li>The machine learning models used have limitations and may not account for all possible health factors.</li>
+                    </ul>
+                    <p>If you're experiencing a medical emergency, call your local emergency services immediately.</p>
                 </div>
             </div>
         </div>
@@ -90,28 +304,58 @@
                             <i class="fab fa-python fa-2x text-primary"></i>
                         </div>
                         <h5>Python/Flask</h5>
-                        <p>Web server and backend</p>
+                        <p>Web server and backend framework</p>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="p-3 rounded-circle mx-auto mb-3 bg-info bg-opacity-10">
                             <i class="fas fa-brain fa-2x text-info"></i>
                         </div>
-                        <h5>scikit-learn</h5>
-                        <p>Machine learning library</p>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="p-3 rounded-circle mx-auto mb-3 bg-secondary bg-opacity-10">
-                            <i class="fab fa-bootstrap fa-2x text-secondary"></i>
-                        </div>
-                        <h5>Bootstrap</h5>
-                        <p>UI framework</p>
+                        <h5>Scikit-learn</h5>
+                        <p>Machine learning algorithms</p>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
-                            <i class="fas fa-chart-pie fa-2x text-success"></i>
+                            <i class="fas fa-database fa-2x text-success"></i>
                         </div>
-                        <h5>Chart.js</h5>
-                        <p>Data visualization</p>
+                        <h5>SQLAlchemy</h5>
+                        <p>ORM for database management</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-warning bg-opacity-10">
+                            <i class="fab fa-bootstrap fa-2x text-warning"></i>
+                        </div>
+                        <h5>Bootstrap 5</h5>
+                        <p>Responsive UI framework</p>
+                    </div>
+                </div>
+                <div class="row text-center mt-3">
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-danger bg-opacity-10">
+                            <i class="fas fa-chart-bar fa-2x text-danger"></i>
+                        </div>
+                        <h5>Pandas</h5>
+                        <p>Data manipulation and analysis</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-secondary bg-opacity-10">
+                            <i class="fas fa-cogs fa-2x text-secondary"></i>
+                        </div>
+                        <h5>Multiple ML Models</h5>
+                        <p>Naive Bayes, Decision Tree, Random Forest, Gradient Boosting</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-dark bg-opacity-10">
+                            <i class="fas fa-file-csv fa-2x text-dark"></i>
+                        </div>
+                        <h5>CSV Datasets</h5>
+                        <p>Health metrics and disease symptoms</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-primary bg-opacity-10">
+                            <i class="fab fa-js fa-2x text-primary"></i>
+                        </div>
+                        <h5>JavaScript</h5>
+                        <p>Interactive UI elements</p>
                     </div>
                 </div>
             </div>

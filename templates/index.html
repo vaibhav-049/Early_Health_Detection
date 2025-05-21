@@ -5,8 +5,16 @@
     <div class="col-lg-10 mx-auto">
         <!-- Welcome section -->
         <div class="text-center mb-4">
-            <h1 class="display-5 mb-3">Health Risk Predictor</h1>
-            <p class="lead">Check your health risk level using our simple Naive Bayes algorithm</p>
+            <h1 class="display-5 mb-3">Early Health Detection</h1>
+            <p class="lead">Advanced health risk assessment and disease prediction using multiple ML algorithms</p>
+            <div class="d-flex justify-content-center mt-3">
+                <a href="{{ url_for('index') }}" class="btn btn-primary mx-2">
+                    <i class="fas fa-heartbeat me-2"></i>Health Risk Assessment
+                </a>
+                <a href="{{ url_for('symptom_checker') }}" class="btn btn-success mx-2">
+                    <i class="fas fa-stethoscope me-2"></i>Disease Prediction
+                </a>
+            </div>
         </div>
         
         <!-- Main Form -->
@@ -33,7 +41,6 @@
                             </select>
                         </div>
                     </div>
-                    
                     <!-- Health Metrics -->
                     <div class="row mb-3">
                         <div class="col-md-4">
@@ -70,8 +77,7 @@
                             <small class="form-text">Normal: 18.5-24.9</small>
                         </div>
                     </div>
-                    
-                    <!-- Lifestyle Factors -->
+                    <!-- Lifestyle Choices -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Do you smoke?</label>
@@ -122,7 +128,6 @@
                         </div>
                     </div>
                     
-                    <!-- Submit Button -->
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="fas fa-heartbeat me-2"></i>Check My Health Risk
@@ -138,31 +143,81 @@
                 <h3 class="my-2"><i class="fas fa-info-circle me-2"></i>How It Works</h3>
             </div>
             <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-md-4 mb-3">
-                        <div class="p-3 rounded-circle mx-auto mb-3 bg-primary bg-opacity-10">
-                            <i class="fas fa-clipboard-list fa-2x text-primary"></i>
+                <ul class="nav nav-tabs" id="howItWorksTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="risk-tab" data-bs-toggle="tab" data-bs-target="#risk" type="button" role="tab" aria-controls="risk" aria-selected="true">Health Risk Assessment</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="disease-tab" data-bs-toggle="tab" data-bs-target="#disease" type="button" role="tab" aria-controls="disease" aria-selected="false">Disease Prediction</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content pt-4" id="howItWorksTabContent">
+                    <!-- Health Risk Assessment Tab -->
+                    <div class="tab-pane fade show active" id="risk" role="tabpanel" aria-labelledby="risk-tab">
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-primary bg-opacity-10">
+                                    <i class="fas fa-clipboard-list fa-2x text-primary"></i>
+                                </div>
+                                <h5>1. Enter Your Data</h5>
+                                <p>Fill in your health information</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-info bg-opacity-10">
+                                    <i class="fas fa-brain fa-2x text-info"></i>
+                                </div>
+                                <h5>2. Machine Learning</h5>
+                                <p>Multiple ML algorithms analyze your data</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                                    <i class="fas fa-chart-pie fa-2x text-success"></i>
+                                </div>
+                                <h5>3. Get Results</h5>
+                                <p>See your health risk assessment</p>
+                            </div>
                         </div>
-                        <h5>1. Enter Your Data</h5>
-                        <p>Fill in your health information</p>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="p-3 rounded-circle mx-auto mb-3 bg-info bg-opacity-10">
-                            <i class="fas fa-brain fa-2x text-info"></i>
+                    
+                    <!-- Disease Prediction Tab -->
+                    <div class="tab-pane fade" id="disease" role="tabpanel" aria-labelledby="disease-tab">
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                                    <i class="fas fa-clipboard-check fa-2x text-success"></i>
+                                </div>
+                                <h5>1. Select Symptoms</h5>
+                                <p>Choose the symptoms you're experiencing</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                                    <i class="fas fa-cogs fa-2x text-success"></i>
+                                </div>
+                                <h5>2. Choose Algorithm</h5>
+                                <p>Select which ML algorithm to use</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                                    <i class="fas fa-stethoscope fa-2x text-success"></i>
+                                </div>
+                                <h5>3. Get Results</h5>
+                                <p>See possible conditions</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                                    <i class="fas fa-chart-line fa-2x text-success"></i>
+                                </div>
+                                <h5>4. Compare Models</h5>
+                                <p>See how different algorithms perform</p>
+                            </div>
                         </div>
-                        <h5>2. Machine Learning</h5>
-                        <p>Naive Bayes algorithm analyzes your data</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
-                            <i class="fas fa-chart-pie fa-2x text-success"></i>
-                        </div>
-                        <h5>3. Get Results</h5>
-                        <p>See your health risk assessment</p>
                     </div>
                 </div>
-                <div class="alert alert-info mt-3">
-                    <strong>Note:</strong> This is a student project using a simple algorithm. It is not a substitute for professional medical advice.
+                
+                <div class="alert alert-warning mt-4">
+                    <h5 class="mb-2"><i class="fas fa-exclamation-triangle me-2"></i>Medical Disclaimer</h5>
+                    <p class="mb-0">This is a student project created for educational purposes only. The predictions are not medically validated and should not be used for real health decisions. Always consult with a qualified healthcare provider.</p>
                 </div>
             </div>
         </div>

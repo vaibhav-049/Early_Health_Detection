@@ -1,0 +1,392 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <!-- Welcome section -->
+        <div class="text-center mb-4">
+            <h1 class="display-5 mb-3">Disease Predictor</h1>
+            <p class="lead">Check your symptoms to identify possible conditions using multiple ML algorithms</p>
+            <p class="text-muted">Our system can detect 41 different diseases including Fungal infections, Allergies, GERD, Diabetes, Asthma, Hypertension, Malaria, Dengue, Tuberculosis, Common Cold, Pneumonia, Heart attack, and more.</p>
+        </div>
+        
+        <!-- Main Form -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="my-2"><i class="fas fa-stethoscope me-2"></i>Symptom Checker</h3>
+            </div>
+            <div class="card-body">
+                <p>Select the symptoms you are experiencing:</p>
+                
+                <form action="{{ url_for('predict_disease') }}" method="POST" id="symptom-form">
+                    <!-- Algorithm Selection -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Select ML Algorithm:</label>
+                        <div class="row">
+                            {% for algo in algorithms %}
+                            <div class="col-md-3 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="algorithm" 
+                                           id="algo_{{ algo.id }}" value="{{ algo.id }}"
+                                           {% if loop.first %}checked{% endif %}>
+                                    <label class="form-check-label" for="algo_{{ algo.id }}">
+                                        {{ algo.name }}
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Symptoms Checkboxes - Organized by Categories -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Select Your Symptoms:</label>
+                        
+                        <!-- Search Box -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="symptom-search" placeholder="Search for symptoms...">
+                        </div>
+                        
+                        <!-- Accordion for Symptom Categories -->
+                        <div class="accordion" id="symptomAccordion">
+                            <!-- Skin Symptoms -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSkin">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkin" aria-expanded="true" aria-controls="collapseSkin">
+                                        Skin Symptoms
+                                    </button>
+                                </h2>
+                                <div id="collapseSkin" class="accordion-collapse collapse show" aria-labelledby="headingSkin" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if symptom_id in ['itching', 'skin_rash', 'nodal_skin_eruptions', 'yellowish_skin', 'bruising', 'red_spots_over_body', 'dischromic_patches', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Respiratory Symptoms -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingRespiratory">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRespiratory" aria-expanded="false" aria-controls="collapseRespiratory">
+                                        Respiratory & Throat Symptoms
+                                    </button>
+                                </h2>
+                                <div id="collapseRespiratory" class="accordion-collapse collapse" aria-labelledby="headingRespiratory" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if symptom_id in ['continuous_sneezing', 'breathlessness', 'cough', 'phlegm', 'throat_irritation', 'runny_nose', 'congestion', 'chest_pain', 'loss_of_smell', 'mucoid_sputum', 'rusty_sputum', 'blood_in_sputum', 'patches_in_throat'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Digestive Symptoms -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingDigestive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDigestive" aria-expanded="false" aria-controls="collapseDigestive">
+                                        Digestive & Abdominal Symptoms
+                                    </button>
+                                </h2>
+                                <div id="collapseDigestive" class="accordion-collapse collapse" aria-labelledby="headingDigestive" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if symptom_id in ['stomach_pain', 'acidity', 'ulcers_on_tongue', 'vomiting', 'indigestion', 'loss_of_appetite', 'abdominal_pain', 'diarrhoea', 'constipation', 'belly_pain', 'swelling_of_stomach', 'distention_of_abdomen', 'stomach_bleeding', 'passage_of_gases', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool', 'irritation_in_anus'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pain & Discomfort -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingPain">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePain" aria-expanded="false" aria-controls="collapsePain">
+                                        Pain & Discomfort
+                                    </button>
+                                </h2>
+                                <div id="collapsePain" class="accordion-collapse collapse" aria-labelledby="headingPain" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if symptom_id in ['joint_pain', 'muscle_pain', 'back_pain', 'neck_pain', 'knee_pain', 'hip_joint_pain', 'headache', 'pain_behind_the_eyes', 'burning_micturition', 'bladder_discomfort'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- General Symptoms -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingGeneral">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneral" aria-expanded="false" aria-controls="collapseGeneral">
+                                        General Symptoms
+                                    </button>
+                                </h2>
+                                <div id="collapseGeneral" class="accordion-collapse collapse" aria-labelledby="headingGeneral" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if symptom_id in ['fatigue', 'weight_gain', 'weight_loss', 'high_fever', 'mild_fever', 'sweating', 'chills', 'shivering', 'dehydration', 'lethargy', 'restlessness', 'malaise', 'toxic_look_(typhos)', 'obesity', 'excessive_hunger', 'increased_appetite'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Other Symptoms -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOther">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+                                        Other Symptoms
+                                    </button>
+                                </h2>
+                                <div id="collapseOther" class="accordion-collapse collapse" aria-labelledby="headingOther" data-bs-parent="#symptomAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row symptom-container">
+                                            {% for symptom_id, symptom_name in symptoms if not symptom_id in ['itching', 'skin_rash', 'nodal_skin_eruptions', 'yellowish_skin', 'bruising', 'red_spots_over_body', 'dischromic_patches', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze', 'continuous_sneezing', 'breathlessness', 'cough', 'phlegm', 'throat_irritation', 'runny_nose', 'congestion', 'chest_pain', 'loss_of_smell', 'mucoid_sputum', 'rusty_sputum', 'blood_in_sputum', 'patches_in_throat', 'stomach_pain', 'acidity', 'ulcers_on_tongue', 'vomiting', 'indigestion', 'loss_of_appetite', 'abdominal_pain', 'diarrhoea', 'constipation', 'belly_pain', 'swelling_of_stomach', 'distention_of_abdomen', 'stomach_bleeding', 'passage_of_gases', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool', 'irritation_in_anus', 'joint_pain', 'muscle_pain', 'back_pain', 'neck_pain', 'knee_pain', 'hip_joint_pain', 'headache', 'pain_behind_the_eyes', 'burning_micturition', 'bladder_discomfort', 'fatigue', 'weight_gain', 'weight_loss', 'high_fever', 'mild_fever', 'sweating', 'chills', 'shivering', 'dehydration', 'lethargy', 'restlessness', 'malaise', 'toxic_look_(typhos)', 'obesity', 'excessive_hunger', 'increased_appetite'] %}
+                                            <div class="col-md-4 mb-2 symptom-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="symptom_{{ symptom_id }}" id="symptom_{{ symptom_id }}_yes" value="yes">
+                                                    <label class="form-check-label" for="symptom_{{ symptom_id }}_yes">
+                                                        {{ symptom_name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search me-2"></i>Check My Symptoms
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- How it works section -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h3 class="my-2"><i class="fas fa-info-circle me-2"></i>How It Works</h3>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-primary bg-opacity-10">
+                            <i class="fas fa-clipboard-list fa-2x text-primary"></i>
+                        </div>
+                        <h5>1. Select Symptoms</h5>
+                        <p>Choose the symptoms you're experiencing</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-info bg-opacity-10">
+                            <i class="fas fa-brain fa-2x text-info"></i>
+                        </div>
+                        <h5>2. Choose Algorithm</h5>
+                        <p>Select which ML algorithm to use</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-success bg-opacity-10">
+                            <i class="fas fa-chart-pie fa-2x text-success"></i>
+                        </div>
+                        <h5>3. Get Results</h5>
+                        <p>See possible conditions</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded-circle mx-auto mb-3 bg-warning bg-opacity-10">
+                            <i class="fas fa-chart-bar fa-2x text-warning"></i>
+                        </div>
+                        <h5>4. Compare Models</h5>
+                        <p>See how different algorithms perform</p>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <strong>Note:</strong> This is a student project using machine learning algorithms. It is not a substitute for professional medical advice.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Symptom search functionality
+        const searchInput = document.getElementById('symptom-search');
+        const symptomItems = document.querySelectorAll('.symptom-item');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            symptomItems.forEach(item => {
+                const symptomText = item.textContent.toLowerCase();
+                if (symptomText.includes(searchTerm)) {
+                    item.style.display = '';
+                    
+                    // If a search term is entered, expand the accordion section containing this item
+                    if (searchTerm.length > 0) {
+                        const accordionBody = item.closest('.accordion-collapse');
+                        if (accordionBody && !accordionBody.classList.contains('show')) {
+                            const accordionButton = document.querySelector(`[data-bs-target="#${accordionBody.id}"]`);
+                            if (accordionButton) {
+                                new bootstrap.Collapse(accordionBody).show();
+                            }
+                        }
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // If search is cleared, collapse all sections except the first one
+            if (searchTerm.length === 0) {
+                document.querySelectorAll('.accordion-collapse').forEach((section, index) => {
+                    if (index !== 0) { // Keep the first section expanded
+                        new bootstrap.Collapse(section).hide();
+                    }
+                });
+            }
+        });
+        
+        // Set default values for all symptom checkboxes
+        const symptomInputs = document.querySelectorAll('input[name^="symptom_"]');
+        
+        // Add a counter for selected symptoms
+        const submitButton = document.querySelector('button[type="submit"]');
+        
+        function updateSymptomCounter() {
+            const checkedCount = document.querySelectorAll('input[name^="symptom_"]:checked').length;
+            if (submitButton) {
+                if (checkedCount > 0) {
+                    submitButton.innerHTML = `<i class="fas fa-search me-2"></i>Check Disease (${checkedCount} symptoms selected)`;
+                    submitButton.disabled = false;
+                } else {
+                    submitButton.innerHTML = `<i class="fas fa-search me-2"></i>Check My Symptoms`;
+                    submitButton.disabled = true;
+                }
+            }
+        }
+        
+        symptomInputs.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSymptomCounter);
+        });
+        
+        // Initialize counter
+        updateSymptomCounter();
+        
+        // Form validation
+        document.getElementById('symptom-form').addEventListener('submit', function(e) {
+            const checkedSymptoms = document.querySelectorAll('input[name^="symptom_"]:checked');
+            
+            if (checkedSymptoms.length === 0) {
+                e.preventDefault();
+                alert('Please select at least one symptom.');
+                return false;
+            }
+            
+            return true;
+        });
+        
+        // Quick selection buttons
+        const addQuickSelectButtons = () => {
+            const categories = [
+                { id: 'collapseSkin', name: 'Skin' },
+                { id: 'collapseRespiratory', name: 'Respiratory' },
+                { id: 'collapseDigestive', name: 'Digestive' },
+                { id: 'collapsePain', name: 'Pain' },
+                { id: 'collapseGeneral', name: 'General' }
+            ];
+            
+            const quickSelectDiv = document.createElement('div');
+            quickSelectDiv.className = 'mb-3 d-flex flex-wrap gap-2';
+            quickSelectDiv.innerHTML = '<span class="me-2 align-self-center">Quick select:</span>';
+            
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn btn-sm btn-outline-secondary';
+                button.textContent = category.name;
+                button.onclick = () => {
+                    const section = document.getElementById(category.id);
+                    if (section) {
+                        new bootstrap.Collapse(section).show();
+                    }
+                };
+                quickSelectDiv.appendChild(button);
+            });
+            
+            const clearButton = document.createElement('button');
+            clearButton.type = 'button';
+            clearButton.className = 'btn btn-sm btn-outline-danger ms-auto';
+            clearButton.textContent = 'Clear All';
+            clearButton.onclick = () => {
+                symptomInputs.forEach(input => {
+                    input.checked = false;
+                });
+                updateSymptomCounter();
+            };
+            quickSelectDiv.appendChild(clearButton);
+            
+            const searchBox = document.querySelector('.mb-3:has(#symptom-search)');
+            searchBox.parentNode.insertBefore(quickSelectDiv, searchBox);
+        };
+        
+        // Add quick select buttons if supported by browser
+        try {
+            if (CSS.supports('selector(:has(*))')) {
+                addQuickSelectButtons();
+            }
+        } catch (e) {
+            console.log('Browser does not support :has selector, skipping quick select buttons');
+        }
+    });
+</script>
+{% endblock %}

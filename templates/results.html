@@ -3,8 +3,15 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-10 mx-auto">
+        <!-- Results Header -->
         <div class="text-center mb-4">
-            <h1 class="display-5 mb-3">Your Health Results</h1>
+            {% if prediction_type == 'disease' %}
+            <h1 class="display-5 mb-3">Disease Prediction Results</h1>
+            <p class="lead">Based on your symptoms and our machine learning analysis</p>
+            {% else %}
+            <h1 class="display-5 mb-3">Your Health Risk Assessment</h1>
+            <p class="lead">Based on the information you provided</p>
+            {% endif %}
         </div>
         
         <div class="card mb-4">
@@ -40,8 +47,8 @@
                                 {% elif prediction.outcome|lower == 'medium' %}bg-warning
                                 {% else %}bg-success{% endif %}" 
                                 role="progressbar" 
-                                style="width: {{ prediction.risk_score }}%;" 
-                                aria-valuenow="{{ prediction.risk_score }}" 
+                                style="width: {% raw %}{{ prediction.risk_score }}{% endraw %}%;" 
+                                aria-valuenow="{% raw %}{{ prediction.risk_score }}{% endraw %}" 
                                 aria-valuemin="0" 
                                 aria-valuemax="100">
                                 {{ prediction.risk_score }}%
@@ -230,14 +237,14 @@
 {% block scripts %}
 <script>
     // Feature importance data from the backend
-    const featureImportance = {{ prediction.features_importance|tojson }};
+    const featureData = JSON.parse('{% raw %}{{ prediction.features_importance|tojson }}{% endraw %}');
     
     // Prepare data for chart - convert keys to readable labels
-    const labels = Object.keys(featureImportance).map(key => {
+    const labels = Object.keys(featureData).map(key => {
         return key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     });
     
-    const data = Object.values(featureImportance);
+    const data = Object.values(featureData);
     
     // Create chart
     const ctx = document.getElementById('featureImportanceChart').getContext('2d');
